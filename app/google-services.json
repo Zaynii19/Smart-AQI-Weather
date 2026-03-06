@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "370244712678",
+    "project_id": "weather-app-40",
+    "storage_bucket": "weather-app-40.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370244712678:android:c3b6a3b3c4af8794e2a327",
+        "android_client_info": {
+          "package_name": "com.aqi.weather"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfI1yN8Sam6-6BYKD3AmjZ4PE3WKFaiDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

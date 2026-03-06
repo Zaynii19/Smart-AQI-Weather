@@ -1,0 +1,66 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.WeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryVariant">#1976D2</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">#03A9F4</item>
+        <item name="colorSecondaryVariant">#0288D1</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+    </style>
+
+    <style name="Theme.WeatherApp" parent="Base.Theme.WeatherApp" />
+
+    <style name="MaterialTimePickerTheme" parent="ThemeOverlay.Material3.MaterialTimePicker">
+        <!-- Background colors dialog -->
+        <item name="colorSurfaceContainerHigh">#1A237E</item>
+        <!-- Background colors clock + min -->
+        <item name="colorSurfaceContainerHighest">#0D1642</item>
+        <!-- Clock selector colors + buttons colors -->
+        <item name="colorPrimary">#304FFE</item>
+        <!-- Hour background color -->
+        <item name="colorPrimaryContainer">#536DFE</item>
+        <!-- Hour text color -->
+        <item name="colorOnPrimaryContainer">#FFFFFF</item>
+        <!-- Colon + min text colors -->
+        <item name="colorOnSurface">#FFFFFF</item>
+        <!-- UnSelected AM/PM background + Clock selected text color -->
+        <item name="colorSurface">#FFFFFF</item>
+        <!-- Selected AM/PM background color -->
+        <item name="colorTertiaryContainer">#536DFE</item>
+        <!-- Selected AM/PM text color -->
+        <item name="colorOnTertiaryContainer">#FFFFFF</item>
+        <!-- Title + unselected AM/PM + keyboard color -->
+        <item name="colorOnSurfaceVariant">#536DFE</item>
+    </style>
+
+    <style name="MaterialDatePickerTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <!-- Background colors dialog -->
+        <item name="colorSurfaceContainerHigh">@color/white</item>
+        <!-- Date Selector + buttons colors-->
+        <item name="colorPrimary">#43C1D5</item>
+        <!-- Selected date text colors-->
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Title + Pencil + Year dropdown + month traversal + title date colors-->
+        <item name="colorOnSurfaceVariant">#43C1D5</item>
+        <!-- Unselected dates color -->
+        <item name="colorOnSurface">@color/black</item>
+    </style>
+
+    <style name="fab_3_rounded">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="DialogSlideAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+    <style name="BottomSheetMaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowAnimationStyle">@style/DialogSlideAnimation</item>
+    </style>
+</resources>

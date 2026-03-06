@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="breathe_smarter">Breathe Smarter</string>
+    <string name="get_real_time_aqi_instantly">Get real time AQI \ninstantly</string>
+    <string name="get_started">Get Started</string>
+    <string name="sign_in">Sign in</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="admin">Admin</string>
+    <string name="citizen">Citizen</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="password_validity">Password must contain: at least one lowercase letter, one uppercase letter, one number, and one special character, and be at least 8 characters</string>
+    <string name="email_validity">Enter a valid email</string>
+    <string name="name_validity">Enter a valid name</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="edit_profile">Edit Profile</string>
+</resources>
