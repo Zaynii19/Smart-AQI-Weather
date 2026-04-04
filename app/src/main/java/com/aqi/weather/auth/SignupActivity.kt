@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -153,6 +154,7 @@ class SignupActivity : AppCompatActivity() {
 
     private fun handleSignUpSuccess() {
         binding.loading.visibility = View.GONE
+        authViewModel.resetStates()
         Toast.makeText(this@SignupActivity, "SignUp Successful", Toast.LENGTH_SHORT).show()
         val intent = if (selectedUserType == "Admin")
             Intent(this@SignupActivity, AdminMainActivity::class.java)
@@ -165,6 +167,8 @@ class SignupActivity : AppCompatActivity() {
     private fun showError(message: String) {
         binding.loading.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Log.e("SignupDebug", "Error: $message")
+        authViewModel.resetStates()
     }
 
     private fun isValidName(name: String): Boolean {

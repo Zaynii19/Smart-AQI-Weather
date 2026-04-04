@@ -1,6 +1,6 @@
-package com.aqi.weather.auth
+package com.aqi.weather.data.remote.dto
 
-data class UserModel(
+data class User(
     var userType: String? = null,
     var id: String? = null,
     var name: String? = null,
@@ -8,5 +8,6 @@ data class UserModel(
     var pass: String? = null,
     var gender: String? = null,
     var dob: String? = null,
-    var phone: String? = null
+    var phone: String? = null,
+    var provider: String? = null
 )

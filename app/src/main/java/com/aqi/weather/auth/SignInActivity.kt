@@ -109,6 +109,7 @@ class SignInActivity : AppCompatActivity() {
     // Handle user type comparison and navigation
     private fun handleSignInSuccess(actualUserType: String?) {
         binding.loading.visibility = View.GONE
+        authViewModel.resetStates()
         if (actualUserType == selectedUserType) {
             Toast.makeText(this, "SignIn successful", Toast.LENGTH_SHORT).show()
             // Store user type in SharedPreferences
@@ -131,5 +132,7 @@ class SignInActivity : AppCompatActivity() {
     private fun showError(message: String) {
         binding.loading.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Log.e("SignInDebug", "Error: $message")
+        authViewModel.resetStates()
     }
 }

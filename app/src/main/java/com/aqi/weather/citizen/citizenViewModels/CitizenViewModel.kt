@@ -2,7 +2,7 @@ package com.aqi.weather.citizen.citizenViewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.aqi.weather.auth.UserModel
+import com.aqi.weather.data.remote.dto.User
 import com.aqi.weather.util.NetworkState
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class CitizenViewModel : ViewModel() {
-    private val _citizensState = MutableStateFlow<NetworkState<List<UserModel>>>(NetworkState.Idle)
-    val citizensState: StateFlow<NetworkState<List<UserModel>>> = _citizensState.asStateFlow()
-    private val _citizenDataState = MutableStateFlow<NetworkState<UserModel>>(NetworkState.Idle)
-    val citizenDataState: StateFlow<NetworkState<UserModel>> = _citizenDataState.asStateFlow()
+    private val _citizensState = MutableStateFlow<NetworkState<List<User>>>(NetworkState.Idle)
+    val citizensState: StateFlow<NetworkState<List<User>>> = _citizensState.asStateFlow()
+    private val _citizenDataState = MutableStateFlow<NetworkState<User>>(NetworkState.Idle)
+    val citizenDataState: StateFlow<NetworkState<User>> = _citizenDataState.asStateFlow()
 
     // Keep references to listener for cleanup
     private var citizensListener: ValueEventListener? = null
@@ -30,9 +30,9 @@ class CitizenViewModel : ViewModel() {
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val itemList = mutableListOf<UserModel>()
+                val itemList = mutableListOf<User>()
                 for (child in snapshot.children) {
-                    val citizenItem = child.getValue(UserModel::class.java)
+                    val citizenItem = child.getValue(User::class.java)
                     if (citizenItem != null) {
                         itemList.add(citizenItem)
                     }
@@ -66,10 +66,10 @@ class CitizenViewModel : ViewModel() {
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val citizen = snapshot.getValue<UserModel>()
+                val citizen = snapshot.getValue<User>()
 
                 _citizenDataState.value = if (citizen == null) {
-                    NetworkState.Success(UserModel())
+                    NetworkState.Success(User())
                 } else {
                     NetworkState.Success(citizen)
                 }

@@ -2,7 +2,7 @@ package com.aqi.weather.admin.adminViewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.aqi.weather.auth.UserModel
+import com.aqi.weather.data.remote.dto.User
 import com.aqi.weather.util.NetworkState
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class AdminViewModel : ViewModel() {
-    private val _adminState = MutableStateFlow<NetworkState<List<UserModel>>>(NetworkState.Idle)
-    val adminState: StateFlow<NetworkState<List<UserModel>>> = _adminState.asStateFlow()
-    private val _adminDataState = MutableStateFlow<NetworkState<UserModel>>(NetworkState.Idle)
-    val adminDataState: StateFlow<NetworkState<UserModel>> = _adminDataState.asStateFlow()
+    private val _adminState = MutableStateFlow<NetworkState<List<User>>>(NetworkState.Idle)
+    val adminState: StateFlow<NetworkState<List<User>>> = _adminState.asStateFlow()
+    private val _adminDataState = MutableStateFlow<NetworkState<User>>(NetworkState.Idle)
+    val adminDataState: StateFlow<NetworkState<User>> = _adminDataState.asStateFlow()
 
     // Keep references to listener for cleanup
     private var adminListener: ValueEventListener? = null
@@ -30,9 +30,9 @@ class AdminViewModel : ViewModel() {
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val itemList = mutableListOf<UserModel>()
+                val itemList = mutableListOf<User>()
                 for (child in snapshot.children) {
-                    val adminItem = child.getValue(UserModel::class.java)
+                    val adminItem = child.getValue(User::class.java)
                     if (adminItem != null) {
                         itemList.add(adminItem)
                     }
@@ -66,10 +66,10 @@ class AdminViewModel : ViewModel() {
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val admin = snapshot.getValue<UserModel>()
+                val admin = snapshot.getValue<User>()
 
                 _adminDataState.value = if (admin == null) {
-                    NetworkState.Success(UserModel())
+                    NetworkState.Success(User())
                 } else {
                     NetworkState.Success(admin)
                 }

@@ -5,108 +5,32 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.AdminMainActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".admin.AdminMainActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_semi_bold"
-        android:text="Admin Dashboard"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_18ssp"
-        app:fontFamily="@font/roboto_bold"
-        android:layout_marginTop="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_semi_bold"
-        android:text="All Citizens"
-        android:textColor="@color/dark_gray"
-        android:textSize="@dimen/_18ssp"
-        app:fontFamily="@font/roboto_bold"
-        android:layout_marginHorizontal="@dimen/_10sdp"
-        android:layout_marginVertical="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/_10sdp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/signOutBtn"
+        app:defaultNavHost="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title2"
-        tools:listitem="@layout/citizen_item" />
+        app:navGraph="@navigation/admin_navigation" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/signOutBtn"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
-        android:paddingVertical="@dimen/_4sdp"
-        android:backgroundTint="@color/buttons_color"
-        android:text="@string/sign_out"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_18ssp"
-        android:fontFamily="@font/roboto_regular"
-        app:cornerRadius="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/noDataAnim"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
-        android:visibility="gone"
+        android:background="#F5F5F5"
+        android:pointerIcon="zoom_in"
+        app:itemActiveIndicatorStyle="@color/white"
+        app:itemIconTint="@drawable/menu_item_selector"
+        app:itemTextColor="@drawable/menu_item_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/no_data_anim" />
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:visibility="gone"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/errorText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_semi_bold"
-        android:textColor="@color/light_gray"
-        android:textSize="@dimen/_13ssp"
-        app:fontFamily="@font/roboto_regular"
-        android:textAlignment="center"
-        android:visibility="gone"
-        android:layout_marginHorizontal="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:menu="@menu/admin_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

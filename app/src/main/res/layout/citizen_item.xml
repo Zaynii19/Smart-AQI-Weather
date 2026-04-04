@@ -34,7 +34,7 @@
         android:id="@+id/arrow"
         android:layout_width="@dimen/_15sdp"
         android:layout_height="@dimen/_15sdp"
-        android:src="@drawable/arrow"
+        android:src="@drawable/arrow_left"
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

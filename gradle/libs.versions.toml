@@ -1,13 +1,16 @@
 [versions]
+app-versionName = "1.0.0"
+app-versionCode = "1"
 agp = "9.0.1"
-coreKtx = "1.17.0"
-firebaseBom = "34.9.0"
+coreKtx = "1.18.0"
+facebookAndroidSdk = "18.2.3"
+firebaseBom = "34.11.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
-activity = "1.12.4"
+activity = "1.13.0"
 constraintlayout = "2.2.1"
 sdpAndroid = "1.1.1"
 sspAndroid = "1.1.1"
@@ -26,9 +29,11 @@ ksp = "2.3.2"
 glide = "5.0.5"
 androidLibrary = "9.0.1"
 lottie = "6.7.1"
+playServicesAuth = "21.5.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+facebook-android-sdk = { module = "com.facebook.android:facebook-android-sdk", version.ref = "facebookAndroidSdk" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
@@ -54,6 +59,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit2-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

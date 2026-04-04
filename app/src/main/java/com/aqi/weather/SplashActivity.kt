@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.aqi.weather.admin.AdminMainActivity
-import com.aqi.weather.auth.SignInActivity
+import com.aqi.weather.auth.SignInOptionActivity
 import com.aqi.weather.citizen.CitizenMainActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
@@ -51,12 +51,12 @@ class SplashActivity : AppCompatActivity() {
                     }
                     else -> {
                         // User type not found, redirect to sign-in screen
-                        Intent(this@SplashActivity, SignInActivity::class.java)
+                        Intent(this@SplashActivity, SignInOptionActivity::class.java)
                     }
                 }
             } else {
                 // User is not signed in
-                Intent(this@SplashActivity, SignInActivity::class.java)
+                Intent(this@SplashActivity, SignInOptionActivity::class.java)
             }
             startActivity(intent)
             finish()

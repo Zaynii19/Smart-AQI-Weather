@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.SignInOptionActivity"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".1" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/titleRow"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_3sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guide">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            app:srcCompat="@drawable/clouds"/>
+
+        <Space
+            android:layout_width="@dimen/_5sdp"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_semi_bold"
+            android:text="@string/smart_aqi_weather"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18ssp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/toggleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="@drawable/toggle_btn_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_3sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleRow">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/adminBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_btn_selected"
+            android:gravity="center"
+            android:text="@string/admin"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
+            app:fontFamily="@font/roboto_semi_bold"/>
+
+        <Space
+            android:layout_width="@dimen/_5sdp"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/citizenBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_btn_unselected"
+            android:gravity="center"
+            android:text="@string/citizen"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/_13ssp"
+            app:fontFamily="@font/roboto_semi_bold"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleContainer">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_8sdp"
+                android:weightSum="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:srcCompat="@drawable/google"
+                    android:layout_marginStart="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_semi_bold"
+                    android:text="@string/sign_in_with_google"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_20sdp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/facebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/facebook_blue">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_8sdp"
+                android:weightSum="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:srcCompat="@drawable/facebook"
+                    android:layout_marginStart="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_semi_bold"
+                    android:text="@string/sign_in_with_facebook"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_20sdp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/twitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/twitter_blue">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_8sdp"
+                android:weightSum="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:srcCompat="@drawable/twitter"
+                    android:layout_marginStart="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_semi_bold"
+                    android:text="@string/sign_in_with_twitter"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_20sdp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/email_red">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_8sdp"
+                android:weightSum="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:srcCompat="@drawable/email"
+                    android:layout_marginStart="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_semi_bold"
+                    android:text="@string/sign_in_with_email"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_20sdp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/phone_green">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_8sdp"
+                android:weightSum="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:srcCompat="@drawable/phone"
+                    android:layout_marginStart="@dimen/_15sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_semi_bold"
+                    android:text="@string/sign_in_with_phone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_20sdp"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/citizenHomeFragment">
+    <fragment
+        android:id="@+id/citizenHomeFragment"
+        android:name="com.aqi.weather.citizen.fragments.CitizenHomeFragment"
+        android:label="fragment_citizen_home"
+        tools:layout="@layout/fragment_citizen_home" />
+    <fragment
+        android:id="@+id/citizenStatsFragment"
+        android:name="com.aqi.weather.citizen.fragments.CitizenStatsFragment"
+        android:label="fragment_citizen_stats"
+        tools:layout="@layout/fragment_citizen_stats" />
+    <fragment
+        android:id="@+id/citizenSettingFragment"
+        android:name="com.aqi.weather.citizen.fragments.CitizenSettingFragment"
+        android:label="fragment_citizen_setting"
+        tools:layout="@layout/fragment_citizen_setting" />
+</navigation>

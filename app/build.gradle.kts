@@ -1,3 +1,6 @@
+import java.util.Properties
+import kotlin.apply
+
 plugins {
     alias(libs.plugins.android.application)
     // KSP for Room
@@ -7,7 +10,7 @@ plugins {
 }
 
 base {
-    archivesName.set("Real Weather")
+    archivesName.set("Real Weather - ${libs.versions.app.versionName.get()}")
 }
 
 android {
@@ -22,10 +25,13 @@ android {
         applicationId = "com.aqi.weather"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"
-
+        versionName = libs.versions.app.versionName.get()
+        versionCode = libs.versions.app.versionCode.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProps = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
+        val webIdFromLocal = localProps.getProperty("WEB_CLIENT_ID") ?: error("WEB_CLIENT_ID not found in local.properties")
+        buildConfigField("String", "WEB_CLIENT_ID", "\"$webIdFromLocal\"")
     }
 
     buildTypes {
@@ -67,6 +73,10 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
+
+    // Auth
+    implementation(libs.play.services.auth) // Google
+    implementation(libs.facebook.android.sdk) // Facebook
 
     // Fragment Navigation
     implementation(libs.androidx.navigation.fragment.ktx)

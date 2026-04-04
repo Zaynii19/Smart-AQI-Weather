@@ -1,51 +1,28 @@
 package com.aqi.weather.citizen
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.Toast
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.aqi.weather.auth.AuthViewModel
-import com.aqi.weather.citizen.citizenViewModels.CitizenViewModel
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.aqi.weather.R
-import com.aqi.weather.auth.SignInActivity
-import com.aqi.weather.auth.UserModel
 import com.aqi.weather.databinding.ActivityCitizenMainBinding
-import com.aqi.weather.databinding.EditProfileSheetBinding
-import com.aqi.weather.util.NetworkState
-import com.aqi.weather.util.isInternetAvailable
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.DateValidatorPointBackward
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class CitizenMainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityCitizenMainBinding.inflate(layoutInflater)
     }
-    private val citizenViewModel: CitizenViewModel by viewModels()
+    private lateinit var navController: NavController
+
+    /*private val citizenViewModel: CitizenViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
-    private var citizenObj: UserModel? = null
-    private var isProfileSheetShowing = false
+    private var citizenObj: User? = null
+    private var isProfileSheetShowing = false*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +36,9 @@ class CitizenMainActivity : AppCompatActivity() {
             insets
         }
 
-        citizenViewModel.retrieveCitizenData()
+        setBottomNav()
+
+        /*citizenViewModel.retrieveCitizenData()
         observeCitizenDataState()
         observeUpdateState()
         observeDeleteUserState()
@@ -84,10 +63,16 @@ class CitizenMainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "No internet available, please check your connection.", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
     }
 
-    private fun observeCitizenDataState() {
+    private fun setBottomNav() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentView) as NavHostFragment
+        navController = navHostFragment.navController
+        binding.navBottom.setupWithNavController(navController)
+    }
+
+    /*private fun observeCitizenDataState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 citizenViewModel.citizenDataState.collect { state ->
@@ -138,7 +123,7 @@ class CitizenMainActivity : AppCompatActivity() {
         }
     }
 
-    fun showCitizens(citizen: UserModel) {
+    fun showCitizens(citizen: User) {
         citizenObj = citizen
         binding.loading.visibility = View.GONE
         binding.name.text = citizen.name
@@ -165,7 +150,7 @@ class CitizenMainActivity : AppCompatActivity() {
         Toast.makeText(this, "Error: $message", Toast.LENGTH_SHORT).show()
     }
 
-    private fun showStartSleepDialog(citizen: UserModel?) {
+    private fun showStartSleepDialog(citizen: User?) {
         if (isProfileSheetShowing) {
             return
         }
@@ -309,5 +294,5 @@ class CitizenMainActivity : AppCompatActivity() {
         }
 
         datePicker.show(this.supportFragmentManager, "MATERIAL_DATE_PICKER")
-    }
+    }*/
 }
