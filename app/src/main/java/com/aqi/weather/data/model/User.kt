@@ -1,4 +1,4 @@
-package com.aqi.weather.data.remote.dto
+package com.aqi.weather.data.model
 
 data class User(
     var userType: String? = null,

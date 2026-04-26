@@ -1,7 +1,6 @@
 package com.aqi.weather.auth
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +10,6 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
@@ -19,7 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.aqi.weather.R
 import com.aqi.weather.admin.AdminMainActivity
+import com.aqi.weather.auth.viewModels.AuthViewModel
 import com.aqi.weather.citizen.CitizenMainActivity
+import com.aqi.weather.data.local.preference.UserPreferencesManager
 import com.aqi.weather.databinding.ActivitySignInBinding
 import com.aqi.weather.util.NetworkState
 import com.aqi.weather.util.isInternetAvailable
@@ -34,7 +34,6 @@ class SignInActivity : AppCompatActivity() {
     private var selectedUserType: String = ""
     private var userEmail: String = ""
     private var userPass: String = ""
-    private lateinit var userPreferences: SharedPreferences
     private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,15 +43,13 @@ class SignInActivity : AppCompatActivity() {
         )
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        userPreferences = getSharedPreferences("LOGIN", MODE_PRIVATE)
-
         onUserSelection()
-        observeSignUpState()
+        observeSignInState()
 
         binding.signupBtn.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
@@ -91,7 +88,7 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeSignUpState() {
+    private fun observeSignInState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 authViewModel.signInState.collect { state ->
@@ -112,8 +109,11 @@ class SignInActivity : AppCompatActivity() {
         authViewModel.resetStates()
         if (actualUserType == selectedUserType) {
             Toast.makeText(this, "SignIn successful", Toast.LENGTH_SHORT).show()
-            // Store user type in SharedPreferences
-            userPreferences.edit { putString("USERTYPE", selectedUserType) }
+            // Store user in SharedPreferences
+            val firebaseUser = Firebase.auth.currentUser
+            val userId = firebaseUser?.uid ?: return
+            val prefsManager = UserPreferencesManager(this@SignInActivity)
+            prefsManager.savePreference(userType = selectedUserType, userId = userId)
 
             // Navigate to the correct dashboard
             when (selectedUserType) {

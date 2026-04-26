@@ -30,8 +30,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         val localProps = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
-        val webIdFromLocal = localProps.getProperty("WEB_CLIENT_ID") ?: error("WEB_CLIENT_ID not found in local.properties")
-        buildConfigField("String", "WEB_CLIENT_ID", "\"$webIdFromLocal\"")
+        val webId = localProps.getProperty("WEB_CLIENT_ID") ?: error("WEB_CLIENT_ID not found in local.properties")
+        buildConfigField("String", "WEB_CLIENT_ID", "\"$webId\"")
+        val weatherApiKey = localProps.getProperty("WEATHER_API_KEY") ?: error("WEATHER_API_KEY not found in local.properties")
+        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
+        val locationApiKey = localProps.getProperty("LOCATION_API_KEY") ?: error("LOCATION_API_KEY not found in local.properties")
+        buildConfigField("String", "LOCATION_API_KEY", "\"$locationApiKey\"")
     }
 
     buildTypes {
@@ -68,6 +72,15 @@ dependencies {
     implementation (libs.ssp.android)
     implementation (libs.glide)
     implementation (libs.lottie)
+    implementation (libs.otpview)
+    implementation (libs.ccp)
+    implementation (libs.material.calendar.view)
+
+    // Location
+    implementation(libs.play.services.location)
+
+    // Work Manager
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -97,8 +110,16 @@ dependencies {
     implementation (libs.androidx.fragment.ktx)
 
     // Retrofit
-    implementation (libs.retrofit)
-    implementation (libs.retrofit2.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
     // OkHttp for logging
-    implementation (libs.logging.interceptor)
+    implementation(libs.logging.interceptor)
+
+    // The core LiteRT (TFLite) dependency from Play Services
+    implementation(libs.play.services.tflite.java)
+    // Optional: Support Library for easier model handling
+    implementation(libs.play.services.tflite.support)
+
+    // Kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

@@ -19,12 +19,11 @@ class MonthChartView @JvmOverloads constructor(
 ) : View(context, attrs) {
 
     private val totalPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#EAEAEA")   // same as week
+        color = Color.parseColor("#EAEAEA")
         style = Paint.Style.FILL
     }
 
     private val completedPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#8DBEA7")   // same as week
         style = Paint.Style.FILL
     }
 
@@ -39,14 +38,14 @@ class MonthChartView @JvmOverloads constructor(
 
     private var labels = listOf("Week 1", "Week 2", "Week 3", "Week 4")
     private var completedList = List(4) { 0 }
-    private var totalList = List(4) { 5 }
+    private var totalMax = 500
+    private var barColors = List(4) { Color.parseColor("#8DBEA7") }
 
-    // Animation (same as week chart)
     private var animationProgress = 1f
 
-    fun setData(completed: List<Int>, total: List<Int>) {
+    fun setData(completed: List<Int>, colors: List<Int>) {
         this.completedList = completed
-        this.totalList = total
+        this.barColors = colors
         invalidate()
     }
 
@@ -73,7 +72,6 @@ class MonthChartView @JvmOverloads constructor(
         val numberOfBars = 4
         val numberOfSpaces = numberOfBars - 1
 
-        // same bar width logic as week (just reduced for 4 bars)
         val barWidth = availableWidth / (numberOfBars * 3f + numberOfSpaces)
         val space = barWidth * 3f
 
@@ -84,19 +82,18 @@ class MonthChartView @JvmOverloads constructor(
         val startX = (width - groupWidth) / 2f
 
         for (i in 0 until 4) {
-
             val xCenter = startX + i * (barWidth + space) + barWidth / 2f
 
-            val total = totalList[i].coerceAtLeast(1)
             val completed = completedList[i].coerceAtLeast(0)
 
-            // SAME WEEK PROGRESS STYLE
-            val totalHeight = ((total / 5f) * barMaxHeight) * animationProgress
-            val completedHeight = ((completed / 5f) * barMaxHeight) * animationProgress
+            // Set the color for this bar
+            completedPaint.color = barColors.getOrElse(i) { Color.parseColor("#8DBEA7") }
 
+            // TOTAL CONTAINER HEIGHT (full bar)
+            val totalHeight = barMaxHeight * animationProgress
             val topTotal = bottom - totalHeight
 
-            // TOTAL CONTAINER RECT
+            // DRAW TOTAL BAR (rounded background)
             val totalRect = RectF(
                 xCenter - barWidth / 2f,
                 topTotal,
@@ -105,9 +102,11 @@ class MonthChartView @JvmOverloads constructor(
             )
             canvas.drawRoundRect(totalRect, radius, radius, totalPaint)
 
+            // COMPLETED HEIGHT (based on AQI value / 500)
+            val completedHeight = (completed / totalMax.toFloat()) * barMaxHeight * animationProgress
             val topCompleted = bottom - completedHeight
 
-            // COMPLETED PROGRESS RECT
+            // DRAW COMPLETED BAR inside total
             val completedRect = RectF(
                 xCenter - barWidth / 2f,
                 topCompleted,
@@ -126,8 +125,9 @@ class MonthChartView @JvmOverloads constructor(
             canvas.restore()
 
             // Label below bar
+            val label = labels[i]
             canvas.drawText(
-                labels[i],
+                label,
                 xCenter,
                 bottom + 50f,
                 textPaint

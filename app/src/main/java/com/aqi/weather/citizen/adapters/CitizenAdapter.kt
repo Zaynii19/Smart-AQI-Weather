@@ -1,10 +1,10 @@
-package com.aqi.weather.citizen.citizenAdapters
+package com.aqi.weather.citizen.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aqi.weather.R
-import com.aqi.weather.data.remote.dto.User
+import com.aqi.weather.data.model.User
 import com.aqi.weather.databinding.CitizenItemBinding
 
 class CitizenAdapter(val citizens: List<User>) : RecyclerView.Adapter<CitizenAdapter.CitizenViewHolder>() {

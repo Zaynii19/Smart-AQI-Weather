@@ -1,6 +1,6 @@
 package com.aqi.weather.data.remote.dto
 
-data class WeatherData(
+data class WeatherResponse(
     val base: String,
     val clouds: Clouds,
     val cod: Int,

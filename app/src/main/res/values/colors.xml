@@ -5,6 +5,7 @@
     <color name="buttons_color">#43C1D5</color>
     <color name="dark_gray">#656262</color>
     <color name="light_gray">#958C8C</color>
+    <color name="very_light_gray">#F2F0F0</color>
     <color name="edit_text_bg">#F7F7F9</color>
     <color name="blue">#0D6EFD</color>
     <color name="green">#FF4CAF50</color>

@@ -40,4 +40,16 @@
     <string name="sign_in_with_phone">Sign in with Phone</string>
     <string name="facebook_app_id">26242668302055174</string>
     <string name="facebook_client_token">0277a3bc6033adb2f4d13bbe7645b915</string>
+    <string name="phone_varification">Phone Varification</string>
+    <string name="we_will_send_you_one_time_password">We will send you <b>One Time Password</b></string>
+    <string name="on_this_mobile_number">on this mobile number</string>
+    <string name="type_your_phone_number">Type your phone number</string>
+    <string name="_continue">Continue</string>
+    <string name="_123456789">123456789</string>
+    <string name="enter_otp_to_verify_your_number">Enter OTP to verify your number</string>
+    <string name="verify">Verify</string>
+    <string name="resend_otp_in_30_sec">Resend OTP in 30 sec</string>
+    <string name="view_all">View All</string>
+    <string name="no_aqi_data_found">No AQI data found</string>
+    <string name="citizens">Citizens</string>
 </resources>

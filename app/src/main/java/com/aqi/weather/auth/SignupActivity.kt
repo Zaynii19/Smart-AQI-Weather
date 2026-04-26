@@ -20,7 +20,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.aqi.weather.R
 import com.aqi.weather.admin.AdminMainActivity
-import com.aqi.weather.admin.adminViewModels.AdminViewModel
+import com.aqi.weather.admin.viewModels.AdminViewModel
+import com.aqi.weather.auth.viewModels.AuthViewModel
 import com.aqi.weather.citizen.CitizenMainActivity
 import com.aqi.weather.databinding.ActivitySignupBinding
 import com.aqi.weather.util.NetworkState
@@ -47,7 +48,7 @@ class SignupActivity : AppCompatActivity() {
         )
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
@@ -77,6 +78,7 @@ class SignupActivity : AppCompatActivity() {
                         if (state.data.isEmpty()) {
                             binding.toggleContainer.visibility = View.VISIBLE
                             onUserSelection()
+                            adminViewModel.resetStates()
                         }
                     }
                 }

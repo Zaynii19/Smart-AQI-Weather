@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.adminFragments.AdminSettingFragment">
+    tools:context=".admin.fragments.AdminSettingFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -134,7 +134,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/aqiData"
+                android:id="@+id/citizens"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_10sdp"
@@ -161,7 +161,7 @@
                         android:layout_height="@dimen/_20sdp"
                         android:gravity="center"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/data"
+                        app:srcCompat="@drawable/citizens"
                         android:layout_margin="@dimen/_5sdp"/>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -172,7 +172,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="start"
-                    android:text="Manage AQI Data"
+                    android:text="@string/citizens"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
@@ -195,7 +195,7 @@
                 android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/aqiData">
+                app:layout_constraintTop_toBottomOf="@+id/citizens">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"

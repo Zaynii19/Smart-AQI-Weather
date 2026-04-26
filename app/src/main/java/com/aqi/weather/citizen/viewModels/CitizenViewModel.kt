@@ -1,8 +1,8 @@
-package com.aqi.weather.citizen.citizenViewModels
+package com.aqi.weather.citizen.viewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.aqi.weather.data.remote.dto.User
+import com.aqi.weather.data.model.User
 import com.aqi.weather.util.NetworkState
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth

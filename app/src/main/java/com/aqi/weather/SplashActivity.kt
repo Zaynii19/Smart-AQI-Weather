@@ -2,7 +2,6 @@ package com.aqi.weather
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,13 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import com.aqi.weather.admin.AdminMainActivity
 import com.aqi.weather.auth.SignInOptionActivity
 import com.aqi.weather.citizen.CitizenMainActivity
+import com.aqi.weather.data.local.preference.UserPreferencesManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
-    private lateinit var userPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,8 +29,8 @@ class SplashActivity : AppCompatActivity() {
         }
 
         // User is signed in, determine role and redirect
-        userPreferences = getSharedPreferences("LOGIN", MODE_PRIVATE)
-        val userType = userPreferences.getString("USERTYPE", "")
+        val prefsManager = UserPreferencesManager(this@SplashActivity)
+        val userType = prefsManager.userType
 
         // Check if user is already signed in
         val auth = FirebaseAuth.getInstance()

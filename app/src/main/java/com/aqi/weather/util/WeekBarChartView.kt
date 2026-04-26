@@ -23,7 +23,6 @@ class WeekBarChartView @JvmOverloads constructor(
     }
 
     private val completedPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#8DBEA7")   // green
         style = Paint.Style.FILL
     }
 
@@ -37,15 +36,16 @@ class WeekBarChartView @JvmOverloads constructor(
     private val radius = 40f
 
     private var dayLabels = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-    private var completedList = List(7) { 0 }
-    private var totalList = List(7) { 5 }
+    private var valueList = List(7) { 0 }
+    private var totalMax = 500
+    private var barColors = List(7) { Color.parseColor("#8DBEA7") }  // Default green
 
     private var animationProgress = 1f
 
-    fun setData(days: List<String>, completed: List<Int>, total: List<Int>) {
+    fun setData(days: List<String>, value: List<Int>, colors: List<Int>) {
         this.dayLabels = days
-        this.completedList = completed
-        this.totalList = total
+        this.valueList = value
+        this.barColors = colors
         invalidate()
     }
 
@@ -76,31 +76,26 @@ class WeekBarChartView @JvmOverloads constructor(
 
         // Bar width will be 1 / 10 of screen by default then adjusted
         val barWidth = availableWidth / (numberOfBars * 3.0f + numberOfSpaces)
-        // val space = barWidth * 0.5f
         val space = barWidth * 3.0f
 
         val barMaxHeight = height * 0.65f
         val bottom = height * 0.8f
 
-        // -------------------------------
         // CENTERING CALCULATION
-        // -------------------------------
-
         val totalGroupWidth = (barWidth * numberOfBars) + (space * numberOfSpaces)
-
-        val startX = (width - totalGroupWidth) / 2f  // PERFECTLY CENTERED
-
+        val startX = (width - totalGroupWidth) / 2f
 
         for (i in 0 until 7) {
-
-            //  val xStart = margin
             val xCenter = startX + i * (barWidth + space) + barWidth / 2f
 
-            val total = totalList[i].coerceAtLeast(1)
-            val completed = completedList[i].coerceAtLeast(0)
+            //val total = totalList[i].coerceAtLeast(1)
+            val completed = valueList[i].coerceAtLeast(0)
+
+            // Set the color for this bar
+            completedPaint.color = barColors.getOrElse(i) { Color.parseColor("#8DBEA7") }
 
             // TOTAL CONTAINER HEIGHT
-            val totalHeight = (total / 5f) * barMaxHeight * animationProgress
+            val totalHeight = totalMax * animationProgress
             val topTotal = bottom - totalHeight
 
             // DRAW TOTAL BAR (rounded)
@@ -108,15 +103,11 @@ class WeekBarChartView @JvmOverloads constructor(
             canvas.drawRoundRect(totalRect, radius, radius, totalBarPaint)
 
             // COMPLETED HEIGHT
-            val completedHeight = (completed / 5f) * barMaxHeight * animationProgress
+            val completedHeight = (completed / totalMax.toFloat()) * barMaxHeight * animationProgress
             val topCompleted = bottom - completedHeight
 
-            /*    val totalHeight = ((total / 5f) * barMaxHeight) * animationProgress
-                val completedHeight = ((completed / 5f) * barMaxHeight) * animationProgress
-    */
             // DRAW COMPLETED BAR inside total
-            val completedRect =
-                RectF(xCenter - barWidth / 2, topCompleted, xCenter + barWidth / 2, bottom)
+            val completedRect = RectF(xCenter - barWidth / 2, topCompleted, xCenter + barWidth / 2, bottom)
             canvas.save()
 
             // Clip inside container shape
@@ -131,9 +122,7 @@ class WeekBarChartView @JvmOverloads constructor(
             val label = dayLabels[i].lowercase().replaceFirstChar { it.uppercase() }
 
             // DRAW DAY LABEL
-            canvas.drawText(
-                label, xCenter, bottom + 50f, textPaint
-            )
+            canvas.drawText(label, xCenter, bottom + 50f, textPaint)
         }
     }
 }

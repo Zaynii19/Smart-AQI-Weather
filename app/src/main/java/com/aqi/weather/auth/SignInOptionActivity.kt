@@ -1,7 +1,6 @@
 package com.aqi.weather.auth
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +10,6 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
@@ -19,7 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.aqi.weather.R
 import com.aqi.weather.admin.AdminMainActivity
+import com.aqi.weather.auth.viewModels.AuthViewModel
 import com.aqi.weather.citizen.CitizenMainActivity
+import com.aqi.weather.data.local.preference.UserPreferencesManager
 import com.aqi.weather.databinding.ActivitySignInOptionBinding
 import com.aqi.weather.util.FacebookAuthManager
 import com.aqi.weather.util.GoogleAuthManager
@@ -32,13 +32,11 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
 
-
 class SignInOptionActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivitySignInOptionBinding.inflate(layoutInflater)
     }
     private val authViewModel: AuthViewModel by viewModels()
-    private lateinit var userPreferences: SharedPreferences
     private var selectedUserType: String = "Citizen"
     private lateinit var googleAuthManager: GoogleAuthManager
     private lateinit var facebookAuthManager: FacebookAuthManager
@@ -55,8 +53,6 @@ class SignInOptionActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        userPreferences = getSharedPreferences("LOGIN", MODE_PRIVATE)
 
         onUserSelection()
         setupListeners()
@@ -121,7 +117,10 @@ class SignInOptionActivity : AppCompatActivity() {
         }
 
         binding.phone.setOnClickListener {
-            // Handle Email Sign-In
+            val intent = Intent(this, PhoneAuthActivity::class.java).apply {
+                putExtra("userType", selectedUserType)
+            }
+            startActivity(intent)
         }
     }
 
@@ -186,8 +185,11 @@ class SignInOptionActivity : AppCompatActivity() {
         authViewModel.resetStates()
         if (actualUserType == selectedUserType) {
             Toast.makeText(this, "SignIn successful", Toast.LENGTH_SHORT).show()
-            // Store user type in SharedPreferences
-            userPreferences.edit { putString("USERTYPE", selectedUserType) }
+            // Store user in SharedPreferences
+            val firebaseUser = Firebase.auth.currentUser
+            val userId = firebaseUser?.uid ?: return
+            val prefsManager = UserPreferencesManager(this@SignInOptionActivity)
+            prefsManager.savePreference(userType = selectedUserType, userId = userId)
 
             // Navigate to the correct dashboard
             when (selectedUserType) {

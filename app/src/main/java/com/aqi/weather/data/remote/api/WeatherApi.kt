@@ -1,15 +1,15 @@
 package com.aqi.weather.data.remote.api
 
-import com.aqi.weather.data.remote.dto.WeatherData
-import retrofit2.Call
+import com.aqi.weather.data.remote.dto.WeatherResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherApi {
     @GET("weather")
-    fun getWeatherData(
+    suspend fun getWeatherData(
         @Query("q") cityName: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): Call<WeatherData>
+    ): Response<WeatherResponse>
 }

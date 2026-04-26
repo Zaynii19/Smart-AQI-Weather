@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.adminFragments.AdminStatsFragment">
+    tools:context=".admin.fragments.AdminStatsFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
@@ -68,7 +68,7 @@
                     app:srcCompat="@drawable/calendar" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/locationText"
+                    android:id="@+id/calenderText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -87,6 +87,24 @@
                     app:srcCompat="@drawable/arrow_down" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <com.applandeo.materialcalendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:headerColor="@color/buttons_color"
+                app:headerLabelColor="@color/white"
+                app:abbreviationsBarColor="@color/buttons_color"
+                app:abbreviationsLabelsColor="@color/white"
+                app:pagesColor="@color/buttons_color"
+                app:daysLabelsColor="@color/white"
+                app:todayLabelColor="@color/blue"
+                app:selectionColor="@color/facebook_blue"
+                android:visibility="gone"
+                android:layout_margin="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/showCalender"/>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/chartText"
                 android:layout_width="0dp"
@@ -98,7 +116,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toStartOf="@+id/showCalender"
-                app:layout_constraintTop_toBottomOf="@+id/showCalender" />
+                app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/toggleContainer"
@@ -185,7 +203,23 @@
                 app:layout_constraintStart_toStartOf="@+id/chartView"
                 app:layout_constraintTop_toBottomOf="@+id/chartView" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/noDataText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/no_aqi_data_found"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recentText"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/recentLogs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -195,7 +229,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/recentText">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/todayLogCard"
+                    android:id="@+id/log1Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
@@ -203,6 +237,7 @@
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     app:strokeColor="@android:color/transparent">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -214,7 +249,7 @@
                         android:weightSum="1">
 
                         <View
-                            android:id="@+id/todayAqiColor"
+                            android:id="@+id/log1Color"
                             android:layout_width="@dimen/_10sdp"
                             android:layout_height="match_parent"
                             android:layout_marginVertical="@dimen/_4sdp"
@@ -232,7 +267,7 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/todayAqiTimeValue"
+                                android:id="@+id/log1Value"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_5sdp"
@@ -242,7 +277,7 @@
                                 android:textSize="@dimen/_13ssp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/todayAqiCategory"
+                                android:id="@+id/log1Category"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_5sdp"
@@ -255,11 +290,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/yesterdayLogCard"
+                    android:id="@+id/log2Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_20sdp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_8sdp"
@@ -275,7 +309,7 @@
                         android:weightSum="1">
 
                         <View
-                            android:id="@+id/yesterdayAqiColor"
+                            android:id="@+id/log2Color"
                             android:layout_width="@dimen/_10sdp"
                             android:layout_height="match_parent"
                             android:layout_marginVertical="@dimen/_4sdp"
@@ -293,7 +327,7 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/yesterdayAqiTimeValue"
+                                android:id="@+id/log2Value"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_5sdp"
@@ -303,7 +337,7 @@
                                 android:textSize="@dimen/_13ssp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/yesterdayAqiCategory"
+                                android:id="@+id/log2Category"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_5sdp"

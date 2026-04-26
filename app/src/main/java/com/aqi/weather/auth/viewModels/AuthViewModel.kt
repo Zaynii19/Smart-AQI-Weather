@@ -1,4 +1,4 @@
-package com.aqi.weather.auth
+package com.aqi.weather.auth.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.aqi.weather.data.repos.AuthRepository
