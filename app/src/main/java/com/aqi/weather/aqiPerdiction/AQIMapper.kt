@@ -11,7 +11,7 @@ object AQIMapper {
             3 -> 125  // midpoint of 101-150
             4 -> 175  // midpoint of 151-200
             5 -> 250  // midpoint of 201-300
-            else -> 400 // midpoint-ish of 301-500
+            else -> 400 // midpoint of 301-500
         }
 
         return when (aqiClass) {

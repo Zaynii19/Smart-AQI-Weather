@@ -94,9 +94,11 @@
                         android:fontFamily="@font/roboto_regular"
                         android:singleLine="true"
                         android:gravity="start"
+                        android:theme="@style/CustomSearchViewStyle"
+                        app:searchIcon="@null"
+                        app:closeIcon="@null"
                         app:iconifiedByDefault="false"
                         app:queryHint="Search location"
-                        app:searchIcon="@null"
                         app:queryBackground="@android:color/transparent"
                         android:inputType="textCapSentences"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -127,7 +129,7 @@
                             android:layout_marginTop="@dimen/_20sdp"
                             android:fontFamily="@font/roboto_semi_bold"
                             android:gravity="center"
-                            android:text="Master AQI"
+                            android:text="@string/master_aqi"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_16ssp"
                             app:layout_constraintEnd_toEndOf="parent"

@@ -8,7 +8,6 @@ import android.location.Location
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.aqi.weather.aqiPerdiction.repos.AQIRepository
 import com.aqi.weather.data.local.database.AQIDatabase
@@ -21,10 +20,7 @@ import com.aqi.weather.data.repos.WeatherRepository
 import com.aqi.weather.receivers.DailyNotificationReceiver
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.suspendCancellableCoroutine
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
-import java.util.Date
 
 class AqiSyncWorker(
     context: Context,
@@ -157,30 +153,46 @@ class AqiSyncWorker(
 class NotificationWorker(
     private val context: Context,
     workerParams: WorkerParameters
-) : Worker(context, workerParams) {
-
-    override fun doWork(): Result {
-        val category = inputData.getString(WorkSchedulers.CATEGORY_KEY) ?: return Result.failure()
-        val timeMillis = inputData.getLong(WorkSchedulers.NOTIFICATION_TIME_KEY, 0L)
-        if (timeMillis == 0L) return Result.failure()
-
+) : CoroutineWorker(context, workerParams) {
+    override suspend fun doWork(): Result {
         return try {
-            // Send broadcast
-            val intent = Intent(context, DailyNotificationReceiver::class.java).apply {
-                putExtra("CATEGORY", category)
+            val database = AQIDatabase.getDatabase(applicationContext)
+            val localAqiRepository = LocalAqiRepository(database.aqiDao())
+            val userPreferencesManager = UserPreferencesManager(applicationContext)
+
+            val userId = userPreferencesManager.userId
+            val threshold = userPreferencesManager.aqiThreshold
+
+            // Get AQI from local DB
+            val date = LocalDate.now().toString()
+            val aqi = localAqiRepository.getAqiByUserIdAndDate(userId, date)
+
+            if (aqi != null && aqi.aqi >= threshold) {
+                // Map title based on AQI label
+                val title = when (aqi.label) {
+                    "Good" -> "AQI Alert_Outdoor Okay"
+                    "Moderate" -> "AQI Alert_Sensitive Reduce"
+                    "Unhealthy for Sensitive Groups" -> "AQI Alert_Limit Exposure"
+                    "Unhealthy" -> "AQI Alert_Stay Inside"
+                    "Very Unhealthy" -> "AQI Alert_Purify Air"
+                    "Hazardous" -> "AQI Alert_Avoid Outdoors"
+                    else -> "AQI Alert"
+                }
+
+                // Send broadcast with mapped title and recommended action as body
+                val intent = Intent(context, DailyNotificationReceiver::class.java).apply {
+                    putExtra("TITLE", title)
+                    putExtra("MESSAGE", aqi.recommendedAction)
+                }
+                context.sendBroadcast(intent)
+                Log.d("WorkersDebug", "Threshold met (${aqi.aqi} >= $threshold). Notification broadcast sent.")
+            } else {
+                Log.d("WorkersDebug", "Threshold not met or no AQI data available.")
             }
-            context.sendBroadcast(intent)
 
-            // Schedule next day’s notification
-            val zone = ZoneId.systemDefault()
-            val nextDayTime = Instant.ofEpochMilli(timeMillis).atZone(zone).toLocalDateTime().plusDays(1)
-                    .atZone(zone).toInstant().toEpochMilli()
-            WorkSchedulers.schedulePushNoti(context, nextDayTime, category)
-
-            Log.d("WorkersDebug", "Broadcast of Category: $category, Time: ${Date(timeMillis)} sent to DailyNotificationReceiver")
             Result.success()
         } catch (e: Exception) {
-            Log.e("WorkersDebug", "Error sending notification broadcast: ${e.message}")
+            Log.e("WorkersDebug", "Error in NotificationWorker: ${e.message}")
             Result.failure()
         }
     }

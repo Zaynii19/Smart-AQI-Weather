@@ -26,6 +26,9 @@ class AuthViewModel : ViewModel() {
     private val _deleteUserState = MutableStateFlow<NetworkState<Boolean>>(NetworkState.Idle)
     val deleteUserState: StateFlow<NetworkState<Boolean>> = _deleteUserState.asStateFlow()
 
+    private val _deleteUserDataState = MutableStateFlow<NetworkState<Boolean>>(NetworkState.Idle)
+    val deleteUserDataState: StateFlow<NetworkState<Boolean>> = _deleteUserDataState.asStateFlow()
+
     fun firebaseAuth(credential: AuthCredential, selectedUserType: String) {
         _firebaseAuthState.value = NetworkState.Loading
 
@@ -86,11 +89,29 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    fun deleteUserDate(pathString: String, userId: String?) {
+        if (userId == null) {
+            _deleteUserDataState.value = NetworkState.Error("User ID is null")
+            return
+        }
+
+        _deleteUserDataState.value = NetworkState.Loading
+
+        authRepository.deleteUserData(pathString, userId) { result ->
+            result.onSuccess { response ->
+                _deleteUserDataState.value = NetworkState.Success(response)
+            }.onFailure { error ->
+                _deleteUserDataState.value = NetworkState.Error(error.message ?: "Delete failed")
+            }
+        }
+    }
+
     fun resetStates() {
         _firebaseAuthState.value = NetworkState.Idle
         _signUpState.value = NetworkState.Idle
         _signInState.value = NetworkState.Idle
         _updateUserState.value = NetworkState.Idle
         _deleteUserState.value = NetworkState.Idle
+        _deleteUserDataState.value = NetworkState.Idle
     }
 }

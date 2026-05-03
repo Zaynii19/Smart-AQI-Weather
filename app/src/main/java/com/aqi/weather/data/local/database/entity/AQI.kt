@@ -1,15 +1,12 @@
 package com.aqi.weather.data.local.database.entity
 
 import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "aqi",
-    indices = [Index(value = ["userId"], unique = true)]
+    primaryKeys = ["userId", "date"] // Both together must be unique
 )
 data class AQI(
-    @PrimaryKey
     val userId: String,
     val date: String,
     val updatedAt: String,

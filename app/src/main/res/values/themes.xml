@@ -50,17 +50,15 @@
         <item name="colorOnSurface">@color/black</item>
     </style>
 
-    <style name="fab_3_rounded">
-        <item name="cornerSize">50%</item>
+    <style name="NumberPickerStyle">
+        <!-- Sets the text color of the numbers -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!-- Sets the color of the selection dividers -->
+        <item name="colorControlNormal">@android:color/black</item>
     </style>
 
-    <style name="DialogSlideAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
-    </style>
-
-    <style name="BottomSheetMaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowAnimationStyle">@style/DialogSlideAnimation</item>
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- This changes the cursor color and the highlight color -->
+        <item name="colorControlActivated">@color/white</item>
     </style>
 </resources>

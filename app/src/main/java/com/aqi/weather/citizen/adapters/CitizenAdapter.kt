@@ -7,11 +7,25 @@ import com.aqi.weather.R
 import com.aqi.weather.data.model.User
 import com.aqi.weather.databinding.CitizenItemBinding
 
-class CitizenAdapter(val citizens: List<User>) : RecyclerView.Adapter<CitizenAdapter.CitizenViewHolder>() {
+class CitizenAdapter(
+    val citizens: List<User>,
+    private val listener: OnItemActionListener
+) : RecyclerView.Adapter<CitizenAdapter.CitizenViewHolder>() {
+
+    interface OnItemActionListener {
+        fun onDelete(citizen: User)
+    }
+
     class CitizenViewHolder(val binding: CitizenItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitizenViewHolder {
-        return CitizenViewHolder(CitizenItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return CitizenViewHolder(
+            CitizenItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount() = citizens.size
@@ -24,6 +38,10 @@ class CitizenAdapter(val citizens: List<User>) : RecyclerView.Adapter<CitizenAda
             "male" -> holder.binding.avatar.setImageResource(R.drawable.male)
             "female" -> holder.binding.avatar.setImageResource(R.drawable.female)
             else -> holder.binding.avatar.setImageResource(R.drawable.male)
+        }
+
+        holder.binding.delete.setOnClickListener {
+            listener.onDelete(citizen)
         }
     }
 }

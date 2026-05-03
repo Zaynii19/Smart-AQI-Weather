@@ -2,15 +2,12 @@ package com.aqi.weather.admin.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
@@ -129,16 +126,6 @@ class AdminHomeFragment : Fragment() {
     }
 
     private fun setSearchView() {
-        // Change text color to white of search view
-        binding.searchLocation.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)?.apply {
-            setTextColor(Color.WHITE)
-            setHintTextColor(ContextCompat.getColor(requireContext(), R.color.very_light_gray))
-        }
-
-        // Get app color from colors.xml
-        binding.searchLocation.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-            ?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
-
         binding.searchLocation.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (isInternetAvailable(requireContext())) {

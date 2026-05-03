@@ -30,7 +30,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateText"
@@ -65,7 +65,7 @@
                     android:layout_height="@dimen/_25sdp"
                     android:gravity="start"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/calendar" />
+                    app:srcCompat="@drawable/calender" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/calenderText"
@@ -173,7 +173,7 @@
                 <com.aqi.weather.util.WeekBarChartView
                     android:id="@+id/weekChart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/_200sdp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +183,7 @@
                 <com.aqi.weather.util.MonthChartView
                     android:id="@+id/monthChart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/_200sdp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

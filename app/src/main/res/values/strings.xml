@@ -52,4 +52,6 @@
     <string name="view_all">View All</string>
     <string name="no_aqi_data_found">No AQI data found</string>
     <string name="citizens">Citizens</string>
+    <string name="master_aqi">Master AQI</string>
+    <string name="notofication">Notofication</string>
 </resources>

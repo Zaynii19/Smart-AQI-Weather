@@ -1,0 +1,13 @@
+<!-- res/drawable/custom_switch_thumb_inset.xml -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="2dp"
+    android:insetBottom="2dp"
+    android:insetLeft="2dp"
+    android:insetRight="2dp">
+
+    <shape android:shape="oval">
+        <solid android:color="#FFFFFF"/>
+        <size android:width="22dp" android:height="22dp"/>
+    </shape>
+
+</inset>

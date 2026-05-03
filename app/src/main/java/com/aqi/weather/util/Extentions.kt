@@ -2,17 +2,18 @@ package com.aqi.weather.util
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.drawable.toDrawable
 import com.aqi.weather.data.local.database.entity.AQI
 import java.time.Duration
 import java.time.Instant
@@ -30,6 +31,19 @@ fun isInternetAvailable(context: Context): Boolean {
     return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
             capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
 }
+
+fun hasNotificationPermission(context: Context): Boolean =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) ==
+                android.content.pm.PackageManager.PERMISSION_GRANTED
+    } else true
+
+fun hasLocationPermission(context: Context): Boolean =
+    context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+            android.content.pm.PackageManager.PERMISSION_GRANTED ||
+            context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+            android.content.pm.PackageManager.PERMISSION_GRANTED
+
 
 fun openAppSettings(context: Context) {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -65,13 +79,9 @@ fun getTimeAgoFromTimestamp(timestamp: Long): String {
     }
 }
 
-fun stringToLocalDate(dateString: String): LocalDate {
-    return LocalDate.parse(dateString)
-}
-
 fun getCircularAqiDrawable(context: Context, aqi: AQI): Drawable {
     val size = 100 // Total diameter of the circle in pixels
-    val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+    val bitmap = createBitmap(size, size)
     val canvas = Canvas(bitmap)
 
     // 1. Setup Background Circle Paint
@@ -101,7 +111,7 @@ fun getCircularAqiDrawable(context: Context, aqi: AQI): Drawable {
 
     canvas.drawText(text, center, center + textOffset, textPaint)
 
-    return BitmapDrawable(context.resources, bitmap)
+    return bitmap.toDrawable(context.resources)
 }
 
 fun getDayString(dateString: String): String {
@@ -115,7 +125,7 @@ fun getDayString(dateString: String): String {
             yesterday -> "Yesterday"
             else -> inputDate.format(DateTimeFormatter.ofPattern("EEEE")) // Returns Monday, Tuesday, etc.
         }
-    } catch (e: DateTimeParseException) {
+    } catch (_: DateTimeParseException) {
         // Handle different date format if needed
         "Invalid date"
     }

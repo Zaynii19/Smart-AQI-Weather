@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
-import java.util.UUID
 
 class AuthRepository {
     fun firebaseAuth(
@@ -113,11 +112,11 @@ class AuthRepository {
         provider: String
     ) {
         val userRef = Firebase.database.reference.child(selectedUserType).child(userId)
-        val id = userRef.push().key ?: UUID.randomUUID().toString()
+        //val id = userRef.push().key ?: UUID.randomUUID().toString()
         val encryptedPassword = pass?.let { Security.encrypt(it) }
         val user = hashMapOf(
             "userType" to selectedUserType,
-            "id" to id,
+            "id" to userId,
             "name" to name,
             "email" to email,
             "pass" to encryptedPassword,
@@ -246,6 +245,24 @@ class AuthRepository {
             }
         } else {
             onResult(Result.failure(Exception("User not authenticated")))
+        }
+    }
+
+    fun deleteUserData(pathString: String, userId: String, onResult: (Result<Boolean>) -> Unit) {
+        Log.d("AuthViewRepoDebug", "userId: $userId")
+        val dbReference = FirebaseDatabase.getInstance().getReference(pathString).child(userId)
+        dbReference.removeValue().addOnCompleteListener { dbTask ->
+            if (dbTask.isSuccessful) {
+                Log.d("AuthViewRepoDebug", "User data deleted successfully.")
+                onResult(Result.success(true))
+            } else {
+                Log.e("AuthViewRepoDebug", "Database deletion failed", dbTask.exception)
+                onResult(
+                    Result.failure(
+                        dbTask.exception ?: Exception("Failed to delete user data")
+                    )
+                )
+            }
         }
     }
 }

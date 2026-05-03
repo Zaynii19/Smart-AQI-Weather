@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.WeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color -->
-        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimary">#43C1D5</item>
         <item name="colorPrimaryVariant">#1976D2</item>
         <item name="colorOnPrimary">#FFFFFF</item>
 
         <!-- Secondary brand color -->
-        <item name="colorSecondary">#03A9F4</item>
+        <item name="colorSecondary">#43C1D5</item>
         <item name="colorSecondaryVariant">#0288D1</item>
         <item name="colorOnSecondary">#FFFFFF</item>
     </style>
@@ -50,17 +50,24 @@
         <item name="colorOnSurface">@color/black</item>
     </style>
 
-    <style name="fab_3_rounded">
-        <item name="cornerSize">50%</item>
+    <style name="NumberPickerStyle">
+        <!-- Sets the text color of the numbers -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!-- Sets the color of the selection dividers -->
+        <item name="colorControlNormal">@android:color/black</item>
     </style>
 
-    <style name="DialogSlideAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
-    </style>
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- 1. Cursor Color -->
+        <item name="colorControlActivated">@color/white</item>
 
-    <style name="BottomSheetMaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowAnimationStyle">@style/DialogSlideAnimation</item>
+        <!-- 2. Input Text Color -->
+        <item name="android:editTextColor">@color/white</item>
+
+        <!-- 3. Hint Text Color -->
+        <item name="android:textColorHint">@color/very_light_gray</item>
+
+        <!-- 4. Icons Tint -->
+        <!--<item name="android:tint">@color/white</item>-->
     </style>
 </resources>
